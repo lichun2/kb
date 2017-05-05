@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Error 403 - <?= $title ?></title>
+    <title>Error 403 </title>
     <meta name="viewport" content="width=device-width">
     <style type="text/css">
 

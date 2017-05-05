@@ -39,6 +39,67 @@ class AuthController extends Controller
         }
     }
 
+    /* public function login(array $values = array(), array $errors = array())
+    {
+        if ($this->userSession->isLogged()) {
+            $this->response->redirect($this->helper->url->to('DashboardController', 'show'));
+        } else {
+            $ticket = $this->sessionStorage->ticket;
+            if (!$ticket) {
+                header("Location:" . SSO_SERVER_URL . "/login?service=" . SSO_SELF_SERVICE);
+            } else {
+                $url = SSO_SERVER_URL . "/validate?ticket=".$ticket."&service=" . SSO_SELF_SERVICE;
+                $curl = curl_init($url);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl, CURLOPT_HEADER,0);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
+                $response = curl_exec($curl);
+                $result = json_decode($response, true);
+                if ($result['status'] === 'success') {
+                    unset($this->sessionStorage->ticket); 
+                    if (isset($result['userEmail'])) {
+                        $user = substr($result['userEmail'], 0, strpos($result['userEmail'], '@kingsoft.com'));
+                        list($valid, $errors) = $this->authValidator->validateForm(['username' => $user, 'password' => '']);
+                        if ($valid) {
+                            $this->response->redirect($this->helper->url->to('DashboardController', 'show'));
+                        } else {
+                            echo $errors['login'];
+                        }
+                    }
+                } else {
+                    echo "SSO登陆失败，请重试";
+                }
+            }
+        }
+    } */
+   /* public function login(array $values = array(), array $errors = array())
+    {
+        if ($this->userSession->isLogged()) {
+            $this->response->redirect($this->helper->url->to('DashboardController', 'show'));
+        } else {
+            $result = array();
+            $result['status'] = "success";
+            $result['userEmail'] = "admin@admin.com";
+           // $result = json_decode($response, true);
+            if ($result['status'] === 'success') {
+                unset($this->sessionStorage->ticket); 
+                if (isset($result['userEmail'])) {
+                    $user = substr($result['userEmail'], 0, strpos($result['userEmail'], '@kingsoft.com'));
+                    list($valid, $errors) = $this->authValidator->validateForm(['username' => $user, 'password' => '']);
+                    if ($valid) {
+                        $this->response->redirect($this->helper->url->to('DashboardController', 'show'));
+                    } else {
+                        echo $errors['login'];
+                    }
+                }
+            } else {
+                echo "SSO登陆失败，请重试";
+            }
+        }
+        $this->response->redirect($this->helper->url->to('DashboardController', 'show'));
+    }*/
+
     /**
      * Check credentials.
      */
@@ -58,7 +119,7 @@ class AuthController extends Controller
     /**
      * Logout and destroy session.
      */
-    public function logout()
+    /*public function logout()
     {
         if (!DISABLE_LOGOUT) {
             $this->sessionManager->close();
@@ -66,8 +127,13 @@ class AuthController extends Controller
         } else {
             $this->response->redirect($this->helper->url->to('Dashboard/DashboardController', 'index'));
         }
-    }
+    }*/
 
+     public function logout()
+    {
+        $this->sessionManager->close();
+        header("Location:" . SSO_SERVER_URL . "/logout?service=" . SSO_SELF_SERVICE);
+    }
     /**
      * Redirect the user after the authentication.
      */

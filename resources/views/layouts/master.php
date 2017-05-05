@@ -35,9 +35,9 @@
             <?php elseif (isset($title)): ?>
                 <?= $this->text->e($title) ?>
             <?php else: ?>
-                Jitamin
+                ksyun
             <?php endif ?>
-            - <?= $this->app->setting('application_name') ?: 'Jitamin' ?>
+            - <?= $this->app->setting('application_name') ?: 'ksyun' ?>
         </title>
 
         <?= $this->hook->render('template:layout:head') ?>
@@ -56,8 +56,6 @@
         <?= $content_for_layout ?>
     <?php else: ?>
         <div class="wrapper">
-        <?= $this->render('_partials/sidebar', [
-        ]) ?>
         <?= $this->render('_partials/navbar', [
             'title' => $title,
             'page_title' => isset($page_title) ? $page_title : null,

@@ -18,6 +18,9 @@
         <li <?= $this->app->setActive('Dashboard/DashboardController', 'activities', 'dashboard') ?>>
             <?= $this->url->link(t('Project activities'), 'Dashboard/DashboardController', 'activities') ?>
         </li>
+        <?php if ($this->user->hasAccess('Manage/ProjectController', 'gantt')): ?>
+        <li <?= $this->app->setActive('Manage/ProjectController', 'gantt') ?>><?= $this->url->link(t('Projects Gantt chart'), 'Manage/ProjectController', 'gantt') ?></li>
+                <?php endif ?>
         <?= $this->hook->render('template:dashboard:subside') ?>
     </ul>
 </div>

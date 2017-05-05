@@ -64,7 +64,7 @@ class ProjectController extends Controller
 
         $filter->getQuery()->asc(ProjectModel::TABLE.'.start_date');
 
-        $this->response->html($this->helper->layout->app('manage/gantt', [
+        $this->response->html($this->helper->layout->app('dashboard/gantt', [
             'projects' => $filter->format(new ProjectGanttFormatter($this->container)),
             'title'    => t('Manage').' &raquo; '.t('Projects Gantt chart'),
         ]));

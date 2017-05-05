@@ -144,4 +144,23 @@ class DashboardController extends Controller
 
         return $new;
     }
+
+     /**
+     * Display Gantt chart for all projects.
+     */
+    public function gantt()
+    {
+        $project_ids = $this->projectPermissionModel->getActiveProjectIds($this->userSession->getId());
+        $filter = $this->projectQuery
+            ->withFilter(new ProjectTypeFilter(ProjectModel::TYPE_TEAM))
+            ->withFilter(new ProjectStatusFilter(ProjectModel::ACTIVE))
+            ->withFilter(new ProjectIdsFilter($project_ids));
+
+        $filter->getQuery()->asc(ProjectModel::TABLE.'.start_date');
+
+        $this->response->html($this->helper->layout->app('manage/gantt', [
+            'projects' => $filter->format(new ProjectGanttFormatter($this->container)),
+            'title'    => t('Manage').' &raquo; '.t('Projects Gantt chart'),
+        ]));
+    }
 }
